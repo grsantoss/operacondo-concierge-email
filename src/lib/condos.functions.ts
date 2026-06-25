@@ -35,24 +35,17 @@ export const createCondo = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data) => createCondoSchema.parse(data))
   .handler(async ({ data, context }) => {
-    const { supabase, userId } = context;
-    const { data: condo, error } = await supabase
-      .from("condos")
-      .insert({
-        nome: data.nome,
-        cnpj: data.cnpj || null,
-        sindico_nome: data.sindico_nome,
-        contact_email: data.contact_email,
-      })
-      .select()
-      .single();
+    const { supabase } = context;
+    const { data: condo, error } = await supabase.rpc("create_condo_for_user", {
+      _nome: data.nome,
+      _cnpj: data.cnpj || null,
+      _sindico_nome: data.sindico_nome,
+      _contact_email: data.contact_email,
+    });
     if (error) throw new Error(error.message);
-    const { error: mErr } = await supabase
-      .from("condo_members")
-      .insert({ condo_id: condo.id, user_id: userId, role: "sindico" });
-    if (mErr) throw new Error(mErr.message);
     return condo;
   });
+
 
 export const completeSetup = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])

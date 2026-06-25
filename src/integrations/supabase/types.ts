@@ -179,6 +179,30 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_condo_for_user: {
+        Args: {
+          _cnpj: string
+          _contact_email: string
+          _nome: string
+          _sindico_nome: string
+        }
+        Returns: {
+          cnpj: string | null
+          contact_email: string
+          created_at: string
+          id: string
+          mirror_address: string | null
+          nome: string
+          setup_complete: boolean
+          sindico_nome: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "condos"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       has_condo_access: {
         Args: { _condo_id: string; _user_id: string }
         Returns: boolean

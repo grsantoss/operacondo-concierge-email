@@ -14,16 +14,190 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      condo_members: {
+        Row: {
+          condo_id: string
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["condo_role"]
+          user_id: string
+        }
+        Insert: {
+          condo_id: string
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["condo_role"]
+          user_id: string
+        }
+        Update: {
+          condo_id?: string
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["condo_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "condo_members_condo_id_fkey"
+            columns: ["condo_id"]
+            isOneToOne: false
+            referencedRelation: "condos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      condos: {
+        Row: {
+          cnpj: string | null
+          contact_email: string
+          created_at: string
+          id: string
+          mirror_address: string | null
+          nome: string
+          setup_complete: boolean
+          sindico_nome: string
+        }
+        Insert: {
+          cnpj?: string | null
+          contact_email: string
+          created_at?: string
+          id?: string
+          mirror_address?: string | null
+          nome: string
+          setup_complete?: boolean
+          sindico_nome: string
+        }
+        Update: {
+          cnpj?: string | null
+          contact_email?: string
+          created_at?: string
+          id?: string
+          mirror_address?: string | null
+          nome?: string
+          setup_complete?: boolean
+          sindico_nome?: string
+        }
+        Relationships: []
+      }
+      drafts: {
+        Row: {
+          approved: boolean
+          body: string
+          condo_id: string
+          created_at: string
+          email_id: string
+          id: string
+          sent_at: string | null
+        }
+        Insert: {
+          approved?: boolean
+          body: string
+          condo_id: string
+          created_at?: string
+          email_id: string
+          id?: string
+          sent_at?: string | null
+        }
+        Update: {
+          approved?: boolean
+          body?: string
+          condo_id?: string
+          created_at?: string
+          email_id?: string
+          id?: string
+          sent_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "drafts_condo_id_fkey"
+            columns: ["condo_id"]
+            isOneToOne: false
+            referencedRelation: "condos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "drafts_email_id_fkey"
+            columns: ["email_id"]
+            isOneToOne: false
+            referencedRelation: "emails"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      emails: {
+        Row: {
+          ai_summary: string | null
+          body: string
+          category: Database["public"]["Enums"]["email_category"]
+          condo_id: string
+          id: string
+          priority: Database["public"]["Enums"]["email_priority"]
+          received_at: string
+          sender_email: string
+          sender_name: string
+          status: Database["public"]["Enums"]["email_status"]
+          subject: string
+        }
+        Insert: {
+          ai_summary?: string | null
+          body: string
+          category?: Database["public"]["Enums"]["email_category"]
+          condo_id: string
+          id?: string
+          priority?: Database["public"]["Enums"]["email_priority"]
+          received_at?: string
+          sender_email: string
+          sender_name: string
+          status?: Database["public"]["Enums"]["email_status"]
+          subject: string
+        }
+        Update: {
+          ai_summary?: string | null
+          body?: string
+          category?: Database["public"]["Enums"]["email_category"]
+          condo_id?: string
+          id?: string
+          priority?: Database["public"]["Enums"]["email_priority"]
+          received_at?: string
+          sender_email?: string
+          sender_name?: string
+          status?: Database["public"]["Enums"]["email_status"]
+          subject?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "emails_condo_id_fkey"
+            columns: ["condo_id"]
+            isOneToOne: false
+            referencedRelation: "condos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_condo_access: {
+        Args: { _condo_id: string; _user_id: string }
+        Returns: boolean
+      }
+      unaccent: { Args: { "": string }; Returns: string }
     }
     Enums: {
-      [_ in never]: never
+      condo_role: "sindico" | "assistente"
+      email_category:
+        | "manutencao"
+        | "reclamacao"
+        | "fornecedor"
+        | "financeiro"
+        | "assembleia"
+        | "reserva"
+        | "informativo"
+        | "urgente"
+      email_priority: "alta" | "media" | "baixa"
+      email_status: "novo" | "em_analise" | "rascunho_pronto" | "respondido"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +324,20 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      condo_role: ["sindico", "assistente"],
+      email_category: [
+        "manutencao",
+        "reclamacao",
+        "fornecedor",
+        "financeiro",
+        "assembleia",
+        "reserva",
+        "informativo",
+        "urgente",
+      ],
+      email_priority: ["alta", "media", "baixa"],
+      email_status: ["novo", "em_analise", "rascunho_pronto", "respondido"],
+    },
   },
 } as const

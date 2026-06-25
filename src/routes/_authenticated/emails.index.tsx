@@ -12,7 +12,7 @@ import { Eye, Pencil, Search } from "lucide-react";
 const condoOpts = queryOptions({ queryKey: ["my-condo"], queryFn: () => getMyCondo() });
 const emailsOpts = queryOptions({ queryKey: ["emails"], queryFn: () => listEmails() });
 
-export const Route = createFileRoute("/_authenticated/emails")({
+export const Route = createFileRoute("/_authenticated/emails/")({
   head: () => ({ meta: [{ title: "E-mails — CondoMail AI" }] }),
   loader: async ({ context }) => {
     const condo = await context.queryClient.ensureQueryData(condoOpts);

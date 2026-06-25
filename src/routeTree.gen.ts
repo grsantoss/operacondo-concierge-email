@@ -12,7 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
+import { Route as AuthenticatedEmailsRouteImport } from './routes/_authenticated/emails'
+import { Route as AuthenticatedDraftsRouteImport } from './routes/_authenticated/drafts'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedEmailsIdRouteImport } from './routes/_authenticated/emails.$id'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -28,40 +33,101 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedEmailsRoute = AuthenticatedEmailsRouteImport.update({
+  id: '/emails',
+  path: '/emails',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDraftsRoute = AuthenticatedDraftsRouteImport.update({
+  id: '/drafts',
+  path: '/drafts',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedEmailsIdRoute = AuthenticatedEmailsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AuthenticatedEmailsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/drafts': typeof AuthenticatedDraftsRoute
+  '/emails': typeof AuthenticatedEmailsRouteWithChildren
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/emails/$id': typeof AuthenticatedEmailsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/drafts': typeof AuthenticatedDraftsRoute
+  '/emails': typeof AuthenticatedEmailsRouteWithChildren
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/emails/$id': typeof AuthenticatedEmailsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/drafts': typeof AuthenticatedDraftsRoute
+  '/_authenticated/emails': typeof AuthenticatedEmailsRouteWithChildren
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/emails/$id': typeof AuthenticatedEmailsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/onboarding'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/drafts'
+    | '/emails'
+    | '/onboarding'
+    | '/settings'
+    | '/emails/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/onboarding'
+  to:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/drafts'
+    | '/emails'
+    | '/onboarding'
+    | '/settings'
+    | '/emails/$id'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/drafts'
+    | '/_authenticated/emails'
     | '/_authenticated/onboarding'
+    | '/_authenticated/settings'
+    | '/_authenticated/emails/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -93,6 +159,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/onboarding': {
       id: '/_authenticated/onboarding'
       path: '/onboarding'
@@ -100,15 +173,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/emails': {
+      id: '/_authenticated/emails'
+      path: '/emails'
+      fullPath: '/emails'
+      preLoaderRoute: typeof AuthenticatedEmailsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/drafts': {
+      id: '/_authenticated/drafts'
+      path: '/drafts'
+      fullPath: '/drafts'
+      preLoaderRoute: typeof AuthenticatedDraftsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/emails/$id': {
+      id: '/_authenticated/emails/$id'
+      path: '/$id'
+      fullPath: '/emails/$id'
+      preLoaderRoute: typeof AuthenticatedEmailsIdRouteImport
+      parentRoute: typeof AuthenticatedEmailsRoute
+    }
   }
 }
 
+interface AuthenticatedEmailsRouteChildren {
+  AuthenticatedEmailsIdRoute: typeof AuthenticatedEmailsIdRoute
+}
+
+const AuthenticatedEmailsRouteChildren: AuthenticatedEmailsRouteChildren = {
+  AuthenticatedEmailsIdRoute: AuthenticatedEmailsIdRoute,
+}
+
+const AuthenticatedEmailsRouteWithChildren =
+  AuthenticatedEmailsRoute._addFileChildren(AuthenticatedEmailsRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDraftsRoute: typeof AuthenticatedDraftsRoute
+  AuthenticatedEmailsRoute: typeof AuthenticatedEmailsRouteWithChildren
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDraftsRoute: AuthenticatedDraftsRoute,
+  AuthenticatedEmailsRoute: AuthenticatedEmailsRouteWithChildren,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

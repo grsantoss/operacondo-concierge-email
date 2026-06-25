@@ -38,7 +38,7 @@ export const createCondo = createServerFn({ method: "POST" })
     const { supabase } = context;
     const { data: condo, error } = await supabase.rpc("create_condo_for_user", {
       _nome: data.nome,
-      _cnpj: data.cnpj || null,
+      _cnpj: data.cnpj ?? "",
       _sindico_nome: data.sindico_nome,
       _contact_email: data.contact_email,
     });

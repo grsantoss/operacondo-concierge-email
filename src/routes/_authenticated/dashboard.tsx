@@ -45,24 +45,25 @@ function DashboardPage() {
 
       <section className="mt-6 rounded-lg border border-border bg-card p-5">
         <h2 className="text-sm font-semibold text-foreground">Volume por categoria (últimos 30 dias)</h2>
-        <div className="mt-5 flex h-48 items-end gap-3">
+        <div className="mt-5 flex h-48 items-stretch gap-3">
           {CATEGORIES.map((c) => {
             const v = byCategory[c];
             const h = Math.round((v / maxCount) * 100);
             return (
-              <div key={c} className="flex flex-1 flex-col items-center gap-2">
-                <div className="flex h-full w-full items-end">
+              <div key={c} className="flex flex-1 flex-col items-center">
+                <div className="flex flex-1 w-full items-end">
                   <div
                     className="w-full rounded-t-sm transition-all"
-                    style={{ height: `${Math.max(h, 3)}%`, backgroundColor: `var(--cat-${c})` }}
+                    style={{ height: `${Math.max(h, 4)}%`, backgroundColor: `var(--cat-${c})` }}
                   />
                 </div>
-                <span className="truncate text-[10px] text-muted-foreground">{CATEGORY_LABEL[c]}</span>
+                <span className="mt-2 truncate text-[10px] text-muted-foreground">{CATEGORY_LABEL[c]}</span>
                 <span className="text-xs font-medium text-foreground">{v}</span>
               </div>
             );
           })}
         </div>
+
       </section>
 
       <section className="mt-6 rounded-lg border border-border bg-card">

@@ -94,7 +94,7 @@ export function AppShell({ children, title, condoName, sindicoName, showProcess 
           <h1 className="truncate text-base font-semibold text-foreground">{title}</h1>
           {showProcess && (
             <Button
-              onClick={() => mutation.mutate({})}
+              onClick={() => mutation.mutate()}
               disabled={mutation.isPending}
               variant="default"
               size="sm"

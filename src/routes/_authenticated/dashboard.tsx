@@ -43,7 +43,7 @@ function DashboardPage() {
         <MetricCard label="Respondidos" value={respondidos} accent="var(--cat-fornecedor)" />
       </div>
 
-      <section className="mt-6 rounded-lg border border-border bg-card p-5">
+      <section className="mt-6 rounded-xl border border-border bg-card shadow-soft p-5">
         <h2 className="text-sm font-semibold text-foreground">Volume por categoria (últimos 30 dias)</h2>
         <div className="mt-5 flex h-48 items-stretch gap-3">
           {CATEGORIES.map((c) => {
@@ -66,7 +66,7 @@ function DashboardPage() {
 
       </section>
 
-      <section className="mt-6 rounded-lg border border-border bg-card">
+      <section className="mt-6 rounded-xl border border-border bg-card shadow-soft">
         <div className="flex items-center justify-between border-b border-border p-5">
           <h2 className="text-sm font-semibold text-foreground">Atividade recente</h2>
           <Link to="/emails" className="text-xs text-primary hover:underline">
@@ -100,7 +100,7 @@ function DashboardPage() {
 
 function MetricCard({ label, value, accent }: { label: string; value: number; accent?: string }) {
   return (
-    <div className="rounded-lg border border-border bg-card p-5">
+    <div className="rounded-xl border border-border bg-card shadow-soft p-5">
       <p className="text-xs uppercase tracking-wide text-muted-foreground">{label}</p>
       <p className="mt-2 text-3xl font-semibold" style={{ color: accent ?? "var(--foreground)" }}>
         {value}

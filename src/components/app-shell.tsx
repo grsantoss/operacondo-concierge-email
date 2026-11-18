@@ -47,15 +47,16 @@ export function AppShell({ children, title, condoName, sindicoName, showProcess 
   }
 
   return (
-    <div className="flex min-h-screen w-full bg-muted">
-      <aside className="hidden w-60 flex-col border-r border-border bg-sidebar md:flex">
-        <div className="flex h-16 items-center gap-2 border-b border-border px-5">
-          <div className="grid h-8 w-8 place-items-center rounded-md bg-primary text-primary-foreground">
+    <div className="flex min-h-screen w-full bg-surface">
+      <aside className="hidden w-64 flex-col bg-ink text-ink-foreground md:flex">
+        <div className="flex h-16 items-center gap-2 border-b border-ink-border px-5">
+          <div className="grid h-7 w-7 place-items-center rounded-md bg-primary text-primary-foreground">
             <Mail className="h-4 w-4" />
           </div>
-          <span className="text-sm font-semibold tracking-tight text-sidebar-foreground">CondoMail AI</span>
+          <span className="text-[18px] font-semibold tracking-tight"><span className="text-primary">Condo</span>Mail AI</span>
         </div>
         <nav className="flex-1 space-y-0.5 p-3">
+          <p className="text-eyebrow px-3 pb-2 pt-1 text-ink-muted">Workspace</p>
           {NAV.map((item) => {
             const active = pathname === item.to || (item.to !== "/dashboard" && pathname.startsWith(item.to));
             const Icon = item.icon;
@@ -63,10 +64,10 @@ export function AppShell({ children, title, condoName, sindicoName, showProcess 
               <Link
                 key={item.to}
                 to={item.to}
-                className={`flex items-center gap-2.5 rounded-md px-3 py-2 text-sm transition-colors ${
+                className={`flex h-9 items-center gap-2.5 rounded-md px-3 text-[13px] font-medium transition-colors ${
                   active
-                    ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground"
-                    : "text-sidebar-foreground/80 hover:bg-sidebar-accent/50"
+                    ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                    : "text-ink-muted hover:bg-sidebar-accent/60 hover:text-ink-foreground"
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -75,14 +76,14 @@ export function AppShell({ children, title, condoName, sindicoName, showProcess 
             );
           })}
         </nav>
-        <div className="border-t border-border p-3">
-          <div className="rounded-md px-3 py-2">
-            <p className="truncate text-xs font-medium text-sidebar-foreground">{condoName}</p>
-            <p className="truncate text-xs text-muted-foreground">{sindicoName}</p>
+        <div className="border-t border-ink-border p-3">
+          <div className="rounded-lg bg-sidebar-accent px-3 py-2.5">
+            <p className="truncate text-[12.5px] font-medium text-ink-foreground">{condoName}</p>
+            <p className="truncate text-meta text-ink-muted">{sindicoName}</p>
           </div>
           <button
             onClick={signOut}
-            className="mt-1 flex w-full items-center gap-2 rounded-md px-3 py-2 text-xs text-muted-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+            className="mt-1 flex w-full items-center gap-2 rounded-md px-3 py-2 text-[12.5px] text-ink-muted hover:bg-sidebar-accent/60 hover:text-ink-foreground"
           >
             <LogOut className="h-3.5 w-3.5" /> Sair
           </button>
@@ -90,23 +91,21 @@ export function AppShell({ children, title, condoName, sindicoName, showProcess 
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-b border-border bg-card px-5">
-          <h1 className="truncate text-base font-semibold text-foreground">{title}</h1>
+        <header className="grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 sticky top-0 z-10 border-b border-border bg-background/85 px-4 backdrop-blur lg:px-8">
+          <h1 className="truncate text-[17px] font-semibold tracking-tight text-foreground">{title}</h1>
           {showProcess && (
             <Button
               onClick={() => mutation.mutate()}
               disabled={mutation.isPending}
-              variant="default"
               size="sm"
-              style={{ backgroundColor: "var(--accent)", color: "var(--accent-foreground)" }}
-              className="shrink-0 hover:opacity-90"
+              className="h-9 shrink-0 text-ui font-semibold shadow-soft"
             >
               <Zap className="mr-1.5 h-3.5 w-3.5" />
               {mutation.isPending ? "Processando..." : "Processar agora"}
             </Button>
           )}
         </header>
-        <main className="flex-1 overflow-auto p-6">{children}</main>
+        <main className="flex-1 overflow-auto px-4 py-6 lg:px-8"><div className="mx-auto max-w-[1400px]">{children}</div></main>
       </div>
     </div>
   );

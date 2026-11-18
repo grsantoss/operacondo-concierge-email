@@ -61,7 +61,7 @@ function AuthPage() {
           <span className="text-xl font-semibold tracking-tight text-foreground">CondoMail AI</span>
         </div>
 
-        <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
+        <div className="rounded-xl border border-border bg-card shadow-soft p-6 shadow-sm">
           <h1 className="text-lg font-semibold text-foreground">
             {mode === "login" ? "Entrar" : "Criar conta"}
           </h1>

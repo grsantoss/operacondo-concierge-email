@@ -60,7 +60,7 @@ function EmailDetailPage() {
 
       <div className="mt-4 grid gap-4 lg:grid-cols-5">
         {/* Left — original email */}
-        <section className="rounded-lg border border-border bg-card lg:col-span-3">
+        <section className="rounded-xl border border-border bg-card shadow-soft lg:col-span-3">
           <div className="border-b border-border p-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div className="min-w-0">
@@ -96,7 +96,7 @@ function EmailDetailPage() {
         </section>
 
         {/* Right — draft */}
-        <section className="rounded-lg border border-border bg-card lg:col-span-2">
+        <section className="rounded-xl border border-border bg-card shadow-soft lg:col-span-2">
           <div className="border-b border-border p-5">
             <h3 className="text-sm font-semibold text-foreground">Rascunho gerado pelo agente</h3>
             <p className="mt-0.5 text-xs text-muted-foreground">Revise antes de aprovar.</p>

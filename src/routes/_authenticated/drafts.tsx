@@ -26,7 +26,7 @@ function DraftsPage() {
 
   return (
     <AppShell title="Rascunhos prontos" condoName={condo!.nome} sindicoName={condo!.sindico_nome} showProcess={false}>
-      <div className="rounded-lg border border-border bg-card">
+      <div className="rounded-xl border border-border bg-card shadow-soft">
         <ul className="divide-y divide-border">
           {drafts.map((e) => (
             <li key={e.id}>

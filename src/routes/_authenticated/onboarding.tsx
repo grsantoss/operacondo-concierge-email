@@ -37,7 +37,7 @@ function OnboardingPage() {
 
         <Stepper step={step} />
 
-        <div className="mt-8 rounded-lg border border-border bg-card p-8 shadow-sm">
+        <div className="mt-8 rounded-xl border border-border bg-card shadow-soft p-8 shadow-sm">
           {step === 1 && <Step1 onDone={() => setStep(2)} />}
           {step === 2 && condo && <Step2 mirror={condo.mirror_address!} onDone={() => setStep(3)} />}
           {step === 3 && condo && <Step3 condoId={condo.id} />}
